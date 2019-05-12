@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.fredlawl.znc</string>
+    <key>Program</key>
+    <string>/path/to/tunnel.sh</string>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <false/>
+    <key>LaunchOnlyOnce</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>/usr/local/var/log/com.fredlawl.znc.log</string>
+    <key>StandardErrorPath</key>
+    <string>/usr/local/var/log/com.fredlawl.znc.log</string>
+    <key>UserName</key>
+    <string>fredlawl</string>
+    <key>GroupName</key>
+    <string>staff</string>
+    <key>InitGroups</key>
+    <true/>
+    <key>SessionCreate</key>
+    <true/>
+</dict>
+</plist>
