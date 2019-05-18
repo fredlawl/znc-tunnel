@@ -9,12 +9,30 @@ echodate()
   echo "[$(date +%Y-%m-%dT%H:%M:%S%z)]:" $*
 }
 
-if /usr/local/bin/nmap -p $port 127.0.0.1 | grep -q 'open'; then
-   echodate "Tunnel is already open"
-   exit 0;
-fi
+connect()
+{
+    ssh -N -fi $keypath -o "StrictHostKeyChecking no" -o ExitOnForwardFailure=yes -L $port:$remoteip:$port $remoteusr@$remoteip
+    if [[ $? -eq 0 ]]; then
+        echodate "Tunnel opened"
+    else
+        echodate "Reattempting"
+    fi
+}
 
-echodate $(ssh -i $keypath -o "StrictHostKeyChecking no" -L $port:$remoteip:$port $remoteusr@$remoteip -N)
-echodate "Tunnel opened"
+
+attempt()
+{
+    if [[ $(netstat -an -f inet | grep "127.0.0.1.$port.*LISTEN" | wc -l) -gt 0 ]]; then
+        echodate "Tunnel is already open"
+        exit 0
+    fi
+
+    connect
+    sleep 5
+    attempt
+}
+
+
+attempt
 
 exit 0
